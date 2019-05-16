@@ -4,7 +4,7 @@ addpath('CA');
 
 %% ========================== Input ==========================
 
-% ______________ Simulation settings ______________
+% ________________ Simulation settings ______________
 EndTime =                   40;
 dt =                        0.01;
 
@@ -12,7 +12,7 @@ dt =                        0.01;
 Export_data =               false;
 
 % ________________ Render settings ________________
-View_Settings = {           [600 400]          % [x y] Window size (0 for default)
+View_Settings = {           [600 400]           % [x y] Window size (0 for default)
                             3                   % Free(1)/Fixed(2)/tracking(3) camera
                             
                             % Free camera
@@ -24,8 +24,8 @@ View_Settings = {           [600 400]          % [x y] Window size (0 for defaul
                             
                             % Tracking camera
                             1                   % Bot to track
-                            0.4                   % Minimum view margin
-                            [-0.2 0]               % x- and y-offset
+                            0.4                 % Minimum view margin
+                            [-0.2 0]            % x- and y-offset
                 };
 
 Render_Settings = [         10                  % Render-frame-skips
@@ -33,8 +33,8 @@ Render_Settings = [         10                  % Render-frame-skips
                        
 Visual_Settings = [         true                % Trails
                             5                   % Trails lifetime
-                            15                   % Trail points per second
-                            true               % Bot number labels
+                            15                  % Trail points per second
+                            true                % Bot number labels
                             false               % Bot direction arrows
                             true                % Bot velocity arrows
                             true                % Print Goals
@@ -52,10 +52,11 @@ Bot_max_v =                 1.5;
 Bot_max_a =                 0.7;
 Bot_vald_max_a =            0.35;
 Bot_max_omega =             10;                 % Rad/s
-Bot_max_omega_acc =         90;                 % Rad / s^2
+Bot_max_omega_acc =         90;                 % Rad/s^2
 Bot_radius =                0.0365;
 
 Collision_Avoidance =       true;
+
 % _____________ Formation properties ______________
 
 Leader_Exists =             true;
@@ -133,16 +134,14 @@ while SimTime <= EndTime
     % Positional error 
     Position_Error(sim_i,:) = vecnorm(Goal_real(First_follower_bot:end,:) - Bots(First_follower_bot:end,1:2),2,2);   
 
-    % Detect collision, this loop does nothing other than change a variable
+    % Detect collision for testing
     for bot1 = 2: size(Bots,1)
         for bot2 = 1: bot1-1
           if norm(Bots(bot1,1:2)-Bots(bot2,1:2)) <= 2*Bot_radius
              Collision_Occured = true;
           end
         end
-    end
-    
-    
+    end  
     
     % Generate a new goal after a certain time
     if Type_of_formation == 3 && Goal_switching == true && floor(SimTime/Goal_switch_time) > Goal_switch_ticker
@@ -170,8 +169,6 @@ while SimTime <= EndTime
                          -1 0];
         end
     end
-    
-    
     
     % ---------- Calculation of v_goal - Start  ----------
     % Get the bots control signals (wanted v and omega)
@@ -219,9 +216,6 @@ while SimTime <= EndTime
     
     % Update the bots positions
     Bots(:,1:2) = Bots(:,1:2) + [Bots(:,3).*cos(Bots(:,4)) Bots(:,3).*sin(Bots(:,4))] * dt;
-
-    
-    
     
     % Update the simulation time and iterator
     SimTime = SimTime + dt;

@@ -22,7 +22,6 @@ omega = Theta_e/dt;
 % ------- v to a -------
 a_goal = (v_theta_goal(:,1) - Bots(:,3))/dt;
 
-
 a_omega_goal = [a_goal omega];
 
 end
