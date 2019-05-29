@@ -4,3 +4,4 @@
 
 #### Kandidatarbete vid Chalmers Tekniska Högskola.
 
+[Youtube-spellista med videor från simuleringar](https://www.youtube.com/playlist?list=PL23vha2p6bpF0jvVlSC3jBWKJwXoPqyGF)
